@@ -1,0 +1,10 @@
+{
+  "name": "functional-programming",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "watch": "tsc --watch",
+    "start": "nodemon dist/app.js"
+  }
+}
