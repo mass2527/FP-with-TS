@@ -47,10 +47,72 @@ function map<T, U>(iterable: Iterable<T>, modifier: (value: T) => U): U[] {
 //   )
 // );
 
-function each<T>(iterable: Iterable<T>, iteratee: (value: T) => unknown) {
+export function each<T>(
+  iterable: Iterable<T>,
+  iteratee: (value: T) => unknown
+) {
   for (const value of iterable) {
     iteratee(value);
   }
 }
 
-console.log(map(document.querySelectorAll("*"), (node) => node.nodeName));
+// console.log(map(document.querySelectorAll("*"), (node) => node.nodeName));
+
+function reduce<T>(
+  iterable: Iterable<T>,
+  reducer: (previousValue: T, currentValue: T) => T
+): T;
+function reduce<T>(
+  iterable: Iterable<T>,
+  reducer: (previousValue: T, currentValue: T) => T,
+  initialValue: T
+): T;
+function reduce<T, U>(
+  iterable: Iterable<T>,
+  reducer: (previousValue: U, currentValue: T) => U,
+  initialValue: U
+): U;
+
+function reduce<T, U>(
+  iterable: Iterable<T>,
+  reducer: (previousValue: T | U, currentValue: T) => T | U,
+  initialValue?: unknown
+) {
+  let result = initialValue;
+
+  each(iterable, (currentValue) => {
+    if (!initialValue) {
+      result = currentValue;
+    } else {
+      result = reducer(result as T | U, currentValue);
+    }
+  });
+  return result;
+}
+
+console.log(
+  reduce(
+    [1, 2, 3, 4, 5],
+    (acc, crr) => {
+      console.log({ acc, crr });
+      return acc + crr;
+    },
+    0
+  )
+);
+
+console.log(
+  reduce(
+    ["a", "b", "c", "a", "b"],
+    (acc, crr) => {
+      if (crr in acc) {
+        acc[crr as keyof typeof acc]++;
+        return acc;
+      } else {
+        acc[crr as keyof typeof acc] = 1;
+        return acc;
+      }
+    },
+    {} as Record<string, number>
+  )
+);

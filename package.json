@@ -5,6 +5,6 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch",
-    "start": "nodemon dist/curry.js"
+    "start": "nodemon dist/app.js"
   }
 }
