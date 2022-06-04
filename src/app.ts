@@ -10,20 +10,20 @@ const users = [
 ];
 
 function filter<T>(iterable: T[], predicator: (value: T) => unknown): T[] {
-  const result = [];
-  for (let i = 0; i < iterable.length; i++) {
-    if (predicator(iterable[i])) {
-      result.push(iterable[i]);
+  const result: T[] = [];
+  each(iterable, (value) => {
+    if (predicator(value)) {
+      result.push(value);
     }
-  }
+  });
   return result;
 }
 
 function map<T, U>(iterable: T[], modifier: (value: T) => U): U[] {
-  const result = [];
-  for (let i = 0; i < iterable.length; i++) {
-    result.push(modifier(iterable[i]));
-  }
+  const result: U[] = [];
+  each(iterable, (value) => {
+    result.push(modifier(value));
+  });
   return result;
 }
 
@@ -43,3 +43,9 @@ console.log(
     (user) => user.age
   )
 );
+
+function each<T>(iterable: T[], iteratee: (value: T) => unknown) {
+  for (let i = 0; i < iterable.length; i++) {
+    iteratee(iterable[i]);
+  }
+}
