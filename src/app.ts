@@ -30,23 +30,6 @@ function map<T, U>(iterable: Iterable<T>, modifier: (value: T) => U): U[] {
   return result;
 }
 
-// a. 30세 이상인 users를 거른다.
-// b. 30세 이상인 users의 names를 수집한다.
-// console.log(
-//   map(
-//     filter(users, (user) => user.age >= 30),
-//     (user) => user.name
-//   )
-// );
-// c. 30세 미만인 users를 거른다.
-// d. 30세 미만인 users의 ages를 수집한다.
-// console.log(
-//   map(
-//     filter(users, (user) => user.age < 30),
-//     (user) => user.age
-//   )
-// );
-
 export function each<T>(
   iterable: Iterable<T>,
   iteratee: (value: T) => unknown
@@ -55,8 +38,6 @@ export function each<T>(
     iteratee(value);
   }
 }
-
-// console.log(map(document.querySelectorAll("*"), (node) => node.nodeName));
 
 function reduce<T>(
   iterable: Iterable<T>,
@@ -89,30 +70,3 @@ function reduce<T, U>(
   });
   return result;
 }
-
-console.log(
-  reduce(
-    [1, 2, 3, 4, 5],
-    (acc, crr) => {
-      console.log({ acc, crr });
-      return acc + crr;
-    },
-    0
-  )
-);
-
-console.log(
-  reduce(
-    ["a", "b", "c", "a", "b"],
-    (acc, crr) => {
-      if (crr in acc) {
-        acc[crr as keyof typeof acc]++;
-        return acc;
-      } else {
-        acc[crr as keyof typeof acc] = 1;
-        return acc;
-      }
-    },
-    {} as Record<string, number>
-  )
-);
