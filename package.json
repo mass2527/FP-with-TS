@@ -5,6 +5,6 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch",
-    "start": "nodemon dist/app.js"
+    "start": "nodemon dist/function-overloading.js"
   }
 }
