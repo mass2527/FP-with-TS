@@ -70,3 +70,7 @@ function reduce<T, U>(
   });
   return result;
 }
+
+function slice<T>(iterable: Iterable<T>, start?: number, end?: number) {
+  return Array.prototype.slice.call(iterable, start, end);
+}
