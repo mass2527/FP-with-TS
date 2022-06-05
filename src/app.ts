@@ -91,3 +91,21 @@ function pluck<T extends Record<string, unknown>, K extends keyof T>(
 ) {
   return map(iterable, (item) => item[key]);
 }
+
+function negate<T>(func: Function) {
+  return function (value: T) {
+    return !func(value);
+  };
+}
+
+function identity<T>(value: T) {
+  return value;
+}
+
+function reject<T>(iterable: Iterable<T>, predicator: (item: T) => unknown) {
+  return filter(iterable, negate(predicator));
+}
+
+function compact<T>(iterable: Iterable<T>) {
+  return filter(iterable, identity);
+}
