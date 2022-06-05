@@ -71,6 +71,16 @@ function reduce<T, U>(
   return result;
 }
 
-function slice<T>(iterable: Iterable<T>, start?: number, end?: number) {
+function rest<T>(iterable: Iterable<T>, start?: number, end?: number) {
   return Array.prototype.slice.call(iterable, start, end);
+}
+
+function pipe<T>(...fns: Function[]) {
+  return function (...arg: T[]) {
+    return reduce(
+      fns,
+      (args, fn) => (args instanceof Array ? fn(...args) : fn(args)),
+      arg
+    );
+  };
 }
