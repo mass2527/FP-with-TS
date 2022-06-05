@@ -109,3 +109,36 @@ function reject<T>(iterable: Iterable<T>, predicator: (item: T) => unknown) {
 function compact<T>(iterable: Iterable<T>) {
   return filter(iterable, identity);
 }
+
+function find<T>(iterable: Iterable<T>, predicator: (value: T) => unknown) {
+  for (const item of iterable) {
+    if (predicator(item)) {
+      return item;
+    }
+  }
+  return undefined;
+}
+
+function findIndex<T>(
+  iterable: Iterable<T>,
+  predicator: (value: T) => unknown
+) {
+  let index = 0;
+  for (const item of iterable) {
+    if (predicator(item)) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
+}
+
+function some<T>(iterable: Iterable<T>, predicator: (value: T) => unknown) {
+  // 만족시키는게 존재하면 true
+  return findIndex(iterable, predicator) !== -1;
+}
+
+function every<T>(iterable: Iterable<T>, predicator: (value: T) => unknown) {
+  // 만족시키지 않는게 존재하지 않으면 true
+  return findIndex(iterable, negate(predicator)) === -1;
+}
