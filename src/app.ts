@@ -84,3 +84,10 @@ function pipe<T>(...fns: Function[]) {
     );
   };
 }
+
+function pluck<T extends Record<string, unknown>, K extends keyof T>(
+  iterable: Iterable<T>,
+  key: K
+) {
+  return map(iterable, (item) => item[key]);
+}
