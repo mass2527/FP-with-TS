@@ -62,7 +62,7 @@ function reduce<T, U>(
   let result = initialValue;
 
   each(iterable, (currentValue) => {
-    if (!initialValue) {
+    if (!result) {
       result = currentValue;
     } else {
       result = reducer(result as T | U, currentValue);
@@ -141,4 +141,32 @@ function some<T>(iterable: Iterable<T>, predicator: (value: T) => unknown) {
 function every<T>(iterable: Iterable<T>, predicator: (value: T) => unknown) {
   // 만족시키지 않는게 존재하지 않으면 true
   return findIndex(iterable, negate(predicator)) === -1;
+}
+
+function min(numbers: number[]) {
+  return reduce(numbers, (previousValue, currentValue) =>
+    previousValue < currentValue ? previousValue : currentValue
+  );
+}
+
+function max(numbers: number[]) {
+  return reduce(numbers, (previousValue, currentValue) =>
+    previousValue < currentValue ? currentValue : previousValue
+  );
+}
+
+function minBy(numbers: number[], manipulator: (value: number) => number) {
+  return reduce(numbers, (previousValue, currentValue) =>
+    manipulator(previousValue) < manipulator(currentValue)
+      ? previousValue
+      : currentValue
+  );
+}
+
+function maxBy(numbers: number[], manipulator: (value: number) => number) {
+  return reduce(numbers, (previousValue, currentValue) =>
+    manipulator(previousValue) < manipulator(currentValue)
+      ? currentValue
+      : previousValue
+  );
 }
