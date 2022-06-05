@@ -170,3 +170,42 @@ function maxBy(numbers: number[], manipulator: (value: number) => number) {
       : previousValue
   );
 }
+
+function groupBy<T extends Record<string, unknown>, K extends keyof T>(
+  iterable: Iterable<T>,
+  groupingKeyGenerator: (value: T) => string
+) {
+  return reduce(
+    iterable,
+    (previousValue, currentValue) => {
+      const groupingKey = groupingKeyGenerator(currentValue) as string;
+      if (previousValue[groupingKey]) {
+        previousValue[groupingKey].push(currentValue);
+      } else {
+        previousValue[groupingKey] = [currentValue];
+      }
+      return previousValue;
+    },
+    {} as Record<string, T[]>
+  );
+}
+
+function countBy<T extends Record<string, unknown>, K extends keyof T>(
+  iterable: Iterable<T>,
+  countingKeyGenerator: (value: T) => string
+) {
+  return reduce(
+    iterable,
+    (previousValue, currentValue) => {
+      const countingKey = countingKeyGenerator(currentValue) as string;
+      if (previousValue[countingKey]) {
+        previousValue[countingKey]++;
+      } else {
+        previousValue[countingKey] = 1;
+      }
+
+      return previousValue;
+    },
+    {} as Record<string, number>
+  );
+}
